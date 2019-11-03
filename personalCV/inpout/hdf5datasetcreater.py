@@ -28,10 +28,10 @@ class DatsetWriter:
 		self.buffer = {"data": [], "labels": []}		
 
 
-	def store_labels_of_classes(self,classLabels):
+	def store_labels_of_classes(self,label_of_classes):
 		dt = h5py.special_dtype(vlen=unicode)
-		labelSet = self.db.create_dataset("label_names",(len(classLabels),), dtype=dt)
-		labelSet[:] = classLabels
+		label_saver = self.db.create_dataset("label_names",(len(label_of_classes),), dtype=dt)
+		label_saver[:] = label_of_classes
 
 	def close(self):
 		if len(self.buffer["data"]) > 0:
