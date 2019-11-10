@@ -3,7 +3,7 @@ import cv2
 
 class Crop:
     
-    def __init__(self,width,height,horizontal_flips = True,inter = cv2.INTER_AREA):
+    def __init__(self,width,height,horizontal_flips = True,inter = cv2.INTER_CUBIC):
     	
     	self.width = width
     	self.horizontal_flips = horizontal_flips
@@ -24,8 +24,3 @@ class Crop:
 		crops.extend(m)
 	return np.array(crops)	
 		
-
-
-
-        
-        
