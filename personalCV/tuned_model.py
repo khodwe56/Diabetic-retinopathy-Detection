@@ -49,6 +49,7 @@ model = Model(inputs=base_model.input, outputs=head_model)
 for lyr in base_model.layers:
 	lyr.trainable = False
 
+print("[INFO] Compiling ....")
 opt = RMSprop(lr=0.002)
 model.compile(loss="categorical_crossentropy", optimizer=opt,metrics=["accuracy"])
 
@@ -57,5 +58,19 @@ model.fit_generator(augumenter.flow(X_train, y_train, batch_size=8),validation_d
 pred = model.predict(X_test, batch_size=8)
 print(classification_report(y_test.argmax(axis=1),
 pred.argmax(axis=1), target_names=name_of_classes)
+
+for lyr in baseModel.layers[15:]:
+	lyr.trainable = True
+
+print("[INFO] Recompiling ....")
+opt = SGD(lr=0.001)
+model.compile(loss="categorical_crossentropy", optimizer=opt,metrics=["accuracy"])	
+
+model.fit_generator(augumenter.flow(X_train, y_train, batch_size=8),validation_data=(X_test, y_test), epochs=100,steps_per_epoch=len(X_train) // 32, verbose=1)
+
+pred = model.predict(X_test, batch_size=8)
+print(classification_report(y_test.argmax(axis=1),
+pred.argmax(axis=1), target_names=name_of_classes))
+
 
 
